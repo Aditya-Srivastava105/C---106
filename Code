@@ -1,0 +1,20 @@
+import plotly.express as px
+import csv
+import numpy as np
+def dataSource(data_path):
+  Coffeeinml = []
+  sleepinhours = []
+  with open(data_path) as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+    for row in csv_reader:
+      Coffeeinml.append(float(row["week"]))
+      sleepinhours.append(float(row["Coffee in ml"]))
+  return{"x": Coffeeinml, "y": sleepinhours}
+def findCoRelation(Data_Source):
+  CoRelation = np.corrcoef(Data_Source["x"],Data_Source["y"])
+  print("Corelation between Coffe in ml and sleep in hours is:" , CoRelation[0,1])
+def setup():
+  data_path = "Coffee.csv"
+  Data_Source = dataSource(data_path)
+  findCoRelation(Data_Source)
+setup()
